@@ -9,7 +9,7 @@ class PostRepository implements IPostRepository
     public function getAll(array $filters = [], int $perPage = 10)
     {
         $query = Post::with('author');
-
+        //dd($query);
         if (!empty($filters['search'])) {
             $search = $filters['search'];
             $query->whereFullText(['title', 'body'], $search);
