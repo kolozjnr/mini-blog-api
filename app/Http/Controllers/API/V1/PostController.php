@@ -61,7 +61,7 @@ class PostController extends Controller
     {
         $post = $this->posts->getById($id);
 
-        if ($post->user_i !== Auth::id()) {
+        if ($post->user_id !== Auth::id()) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
         $this->posts->delete($post->id);
