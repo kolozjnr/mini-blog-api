@@ -32,18 +32,21 @@ class AuthRepository implements IAuthRepository
         return $token;
     }
 
-    public function logout()
-    {
+    public function logout(){
         JWTAuth::invalidate(JWTAuth::getToken());
     }
 
-    public function refresh()
-    {
+    public function refresh(){
         return JWTAuth::refresh(JWTAuth::getToken());
     }
 
-    public function user()
-    {
-        return auth()->user();
+    public function user(){
+         return auth()->user();
+    }
+
+    public function profile(int $userId){
+        $user = User::findOrfail($userId);
+
+        return $user;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\IPostRepository;
 
 class PostController extends Controller
@@ -56,13 +57,15 @@ class PostController extends Controller
         return response()->json($this->posts->update($post, $data));
     }
 
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        if ($post->user_id !== auth()->id()) {
+        $post = $this->posts->getById($id);
+
+        if ($post->user_i !== Auth::id()) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
-
-        $this->posts->delete($post);
-        return response()->json(null, 204);
+        $this->posts->delete($post->id);
+        return response()->json(['message' => 'Post deleted successfully']);
     }
+
 }

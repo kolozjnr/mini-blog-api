@@ -67,6 +67,15 @@ class AuthController extends Controller
         return response()->json($this->authRepository->user());
     }
 
+    public function profile($id)
+    {
+        $user = $this->authRepository->profile($id);
+        
+         return response()->json([
+            'user'  => $user
+        ], 201);
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([

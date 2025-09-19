@@ -9,4 +9,5 @@ interface IAuthRepository
     public function logout();
     public function refresh();
     public function user();
+    public function profile(int $userId);
 }

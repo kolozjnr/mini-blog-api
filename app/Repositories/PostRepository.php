@@ -9,12 +9,10 @@ class PostRepository implements IPostRepository
     public function getAll(array $filters = [], int $perPage = 10)
     {
         $query = Post::with('author');
+
         if (!empty($filters['search'])) {
             $search = $filters['search'];
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('body', 'LIKE', "%{$search}%");
-            });
+            $query->whereFullText(['title', 'body'], $search);
         }
 
         return $query->latest()->paginate($perPage);
